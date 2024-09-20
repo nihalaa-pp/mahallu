@@ -1,0 +1,2 @@
+web: gunicorn mahallu_info_system.wsgi
+
