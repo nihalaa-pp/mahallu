@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Household List</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        
+        h2 {
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        /* Button styles */
+        .button, button, .edit-button {
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover, .button:hover, .edit-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Logout button */
+        form {
+            display: inline-block;
+        }
+
+        /* Action buttons */
+        td a {
+            text-decoration: none;
+            color: #0066cc;
+            padding: 5px 10px;
+            border: 1px solid #0066cc;
+            border-radius: 5px;
+        }
+
+        td a:hover {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 20px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .button, button, .edit-button {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            /* Style adjustments for action buttons */
+            td a {
+                font-size: 14px;
+                padding: 4px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 18px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+
+            .button, button, .edit-button {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            /* Style adjustments for action buttons */
+            td a {
+                font-size: 12px;
+                padding: 3px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Household List</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Panchayath</th>
+                <th>Ward</th>
+                <th>House Number</th>
+                <th>Mahallu Number</th>
+                <th>Mahallu Area</th>
+                <th>Standard of Living</th>
+                <th>Head of Household</th>
+                <th>Actions</th>  <!-- Add Actions column -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for household in households %}
+            <tr>
+                <td>{{ household.panchayath }}</td>
+                <td>{{ household.ward }}</td>
+                <td>{{ household.house_number }}</td>
+                <td>{{ household.mahallu_number }}</td>
+                <td>{{ household.mahallu_area }}</td>
+                <td>{{ household.standard_of_living }}</td>
+                <td>{{ household.head_of_household }}</td>
+                <td>
+                    <a href="{% url 'edit_household' household.pk %}">Edit</a>
+                    <form action="{% url 'delete_household' household.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+
+    <a href="{% url 'household_member_list' %}" class="button">Household Member List</a>
+    
+    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    <form method="POST"action="{% url 'create_household' %}" style="display:inline;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Member</button>
+    </form>
+
+</body>
+</html>

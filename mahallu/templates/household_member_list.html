@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Household Members</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        
+        h2 {
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        /* Button styles */
+        .button, button {
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover, .button:hover {
+            background-color: #45a049;
+        }
+
+        /* Logout button */
+        form {
+            display: inline-block;
+        }
+
+        /* Action buttons */
+        td a {
+            text-decoration: none;
+            color: #0066cc;
+            padding: 5px 10px;
+            border: 1px solid #0066cc;
+            border-radius: 5px;
+        }
+
+        td a:hover {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        /* Table column widths */
+        th, td {
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        td:nth-child(3), td:nth-child(4) {
+            width: 150px; /* Phone and WhatsApp number column width */
+        }
+
+        td:nth-child(5) {
+            width: 50px; /* Age column width */
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 20px;
+            }
+
+            th, td {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .button, button {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 18px;
+            }
+
+            th, td {
+                padding: 6px;
+                font-size: 12px;
+            }
+
+            .button, button {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            /* Adjust table layout for smaller screens */
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <h2>Household Members</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                
+                <th>Relationship to Head</th>
+                <th>Phone Number</th>
+                <th>WhatsApp Number</th>
+                <th>Age</th>
+                <th>Married</th>
+                <th>Studying Course</th>
+                <th>Institution</th>
+                <th>Education Qualification</th>
+                <th>Job</th>
+                <th>Country of Job</th>
+                <th>Place of Job</th>
+                <th>Job Sector</th>
+                <th>Job Experience</th>
+                <th>Govt Employee</th>
+                <th>Expat</th>
+                <th>Entrepreneur</th>
+                <th>Business Owner</th>
+                <th>Looking for Job</th>
+                <th>Chronic Patient</th>
+                <th>Chronic Disease Info</th>
+                <th>Differently Abled</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.name }}</td>
+                <td>{{ member.relationship_to_head }}</td>
+                <td>{{ member.phone_number }}</td>
+                <td>{{ member.whatsapp_number }}</td>
+                <td>{{ member.age }}</td>
+                <td>{{ member.is_married }}</td>
+                <td>{{ member.studying_course }}</td>
+                <td>{{ member.institution }}</td>
+                <td>{{ member.education_qualification }}</td>
+                <td>{{ member.job }}</td>
+                <td>{{ member.country_of_job }}</td>
+                <td>{{ member.place_of_job }}</td>
+                <td>{{ member.job_sector }}</td>
+                <td>{{ member.job_experience }}</td>
+                <td>{{ member.is_government_employee }}</td>
+                <td>{{ member.is_expat }}</td>
+                <td>{{ member.is_entrepreneur }}</td>
+                <td>{{ member.is_business_owner }}</td>
+                <td>{{ member.is_looking_for_job }}</td>
+                <td>{{ member.is_chronic_patient }}</td>
+                <td>{{ member.chronic_disease_info }}</td>
+                <td>{{ member.is_differently_abled }}</td>
+                <td>
+                    <a href="{% url 'edit_household_member' member.pk %}">Edit</a>
+                    <form action="{% url 'delete_household_member' member.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="21">No household members found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'household_list' %}" class="button">Back</a>
+    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    <form method="POST"action="{% url 'create_household' %}" style="display:inline;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Member</button>
+    </form>
+</body>
+</html>

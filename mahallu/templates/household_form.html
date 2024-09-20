@@ -1,0 +1,150 @@
+<form method="post">
+    {% csrf_token %}
+    <h2>Create Household</h2>
+    <style>
+        /* Basic styles for body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Form container styling */
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Input field and label styling */
+        div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"], input[type="email"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Error message styling */
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        /* Button styling */
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Link styling */
+        .button {
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Media queries */
+        @media (max-width: 768px) {
+            form {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            input[type="text"], input[type="number"], input[type="email"], select {
+                padding: 8px;
+            }
+
+            button, .button {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            form {
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            input[type="text"], input[type="number"], input[type="email"], select {
+                padding: 6px;
+            }
+
+            button, .button {
+                padding: 8px;
+            }
+        }
+    </style>
+    
+    {% for field in household_form %}
+        <div>
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}  <!-- Render the input field -->
+            {% if field.errors %}
+                <!-- Optionally render errors, or leave it out -->
+                <div class="error">{{ field.errors }}</div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    
+    <h2>Household Member Details</h2>
+    
+    {% for field in member_form %}
+        <div>
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}  <!-- Render the input field -->
+            {% if field.errors %}
+                <div class="error">{{ field.errors }}</div>  <!-- Can choose to leave this out -->
+            {% endif %}
+        </div>
+    {% endfor %}
+    
+    <button type="submit">Save Household</button>
+    <a href="{% url 'household_list' %}" class="button">Household List</a>
+</form>
