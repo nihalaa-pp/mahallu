@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,8 @@ SECRET_KEY = 'django-insecure-8xsuoc3=#mgv9azae&t7!tdjk86j(=8c7niwbipz0!&yp=re$@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 
 
 
@@ -79,10 +81,15 @@ WSGI_APPLICATION = 'mahallu_info_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'data_nuzz',  # Your database name
+        'USER': 'data_nuzz_user',  # Your database user
+        'PASSWORD': 'cO3JmfKC0uQJ0r4bVPHInDx8ywOU6HFn',  # Your database password
+        'HOST': 'dpg-cs8cbi68ii6s73c86fd0-a',  # Your database host
+        'PORT': '5432',  # Default PostgreSQL port
     }
 }
+
 
 
 # Password validation
