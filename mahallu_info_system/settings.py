@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'data_nuzz',  # Your database name
         'USER': 'data_nuzz_user',  # Your database user
         'PASSWORD': 'cO3JmfKC0uQJ0r4bVPHInDx8ywOU6HFn',  # Your database password
-        'HOST': 'dpg-cs8cbi68ii6s73c86fd0-a',  # Your database host
+        'HOST': 'dpg-cs8cbi68ii6s73c86fd0-a.oregon-postgres.render.com',  # Your database host
         'PORT': '5432',  # Default PostgreSQL port
     }
 }
