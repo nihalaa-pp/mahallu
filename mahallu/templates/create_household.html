@@ -6,10 +6,11 @@
         /* Basic styles for body */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: black;
             margin: 0;
             padding: 20px;
         }
+      
 
         /* Form container styling */
         form {
@@ -48,7 +49,7 @@
         /* Submit button styling */
         button {
             width: 100%;
-            background-color: #007bff;
+            background-color: #333;
             color: white;
             padding: 12px;
             margin: 10px 0;
@@ -59,16 +60,16 @@
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: black;
         }
 
         /* Link styling */
         .button {
             display: inline-block;
             text-align: center;
-            width: 100%;
+            width: 96%;
             padding: 12px;
-            background-color: #28a745;
+            background-color: #333;
             color: white;
             border-radius: 5px;
             text-decoration: none;
@@ -76,7 +77,7 @@
         }
 
         .button:hover {
-            background-color: #218838;
+            background-color: black;
         }
 
         /* Responsive design with media query */
@@ -130,11 +131,12 @@
     </style>
 </head>
 <body>
-    <h2>Create Household</h2>
+
     <form method="post">
+        <h2>CREATE HOUSEHOLD</h2>
         {% csrf_token %}
         {{ household_form.as_p }}
-        <h2>Household Member Details</h2>
+        <h2>HOUSEHOLD MEMBER DETAILS</h2>
         {{ member_form.as_p }}
         <button type="submit">Save Household</button>
     <a href="{% url 'household_list' %}" class="button">House Hold</a>
