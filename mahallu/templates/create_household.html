@@ -135,7 +135,9 @@
     <form method="post">
         <h2>CREATE HOUSEHOLD</h2>
         {% csrf_token %}
+        
         {{ household_form.as_p }}
+        
         <h2>HOUSEHOLD MEMBER DETAILS</h2>
         {{ member_form.as_p }}
         <button type="submit">Save Household</button>

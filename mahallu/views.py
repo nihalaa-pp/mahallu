@@ -54,9 +54,36 @@ def create_household(request):
     })
 
 def household_list(request):
-    households = Household.objects.all()
-    return render(request, 'household_list.html', {'households': households})
+    query = request.GET.get('query', '')
+    selected_mahallu_area = request.GET.get('mahallu_area', '')
+    selected_head_of_household = request.GET.get('head_of_household', '')
 
+    households = Household.objects.all()
+
+    # Filter households based on query
+    if query:
+        households = households.filter(house_name__icontains=query)
+
+    if selected_mahallu_area:
+        households = households.filter(mahallu_area=selected_mahallu_area)
+
+    if selected_head_of_household:
+        households = households.filter(head_of_household=selected_head_of_household)
+
+    # Get unique Mahallu Areas and Heads of Household for the filter dropdowns
+    mahallu_areas = households.values_list('mahallu_area', flat=True).distinct()
+    household_heads = households.values_list('head_of_household', flat=True).distinct()
+
+    context = {
+        'households': households,
+        'query': query,
+        'selected_mahallu_area': selected_mahallu_area,
+        'selected_head_of_household': selected_head_of_household,
+        'mahallu_areas': mahallu_areas,
+        'household_heads': household_heads,
+    }
+
+    return render(request, 'household_list.html', context)
 def edit_household(request, pk):
     household = get_object_or_404(Household, pk=pk)
     if request.method == 'POST':
@@ -76,9 +103,31 @@ def delete_household(request, pk):
     return render(request, 'confirm_delete.html', {'household': household})
 
 def household_member_list(request):
-    members = HouseholdMember.objects.all()
-    return render(request, 'household_member_list.html', {'members': members})
+    search_name = request.GET.get('search_name', '')
+    selected_relationship = request.GET.get('relationship_to_head', '')
+    selected_job = request.GET.get('job', '')
 
+    members = HouseholdMember.objects.all()
+
+    # Apply filters based on user input
+    if search_name:
+        members = members.filter(name__icontains=search_name)
+
+    if selected_relationship:
+        members = members.filter(relationship_to_head=selected_relationship)
+
+    if selected_job:
+        members = members.filter(job=selected_job)
+
+    # Get distinct values for filtering
+    relationships = HouseholdMember.objects.values_list('relationship_to_head', flat=True).distinct()
+    jobs = HouseholdMember.objects.values_list('job', flat=True).distinct()
+
+    return render(request, 'household_member_list.html', {
+        'members': members,
+        'relationships': relationships,
+        'jobs': jobs,
+    })
 def edit_household_member(request, pk):
     member = get_object_or_404(HouseholdMember, pk=pk)
     if request.method == 'POST':

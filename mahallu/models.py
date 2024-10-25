@@ -5,6 +5,7 @@ class Household(models.Model):
 
     panchayath = models.CharField(max_length=100)
     ward = models.CharField(max_length=50)
+    house_name = models.CharField(max_length=100,)
     house_number = models.IntegerField()
     mahallu_number = models.CharField(max_length=20)
     mahallu_area = models.CharField(max_length=100)

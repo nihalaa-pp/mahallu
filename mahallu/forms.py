@@ -16,7 +16,7 @@ class UserLoginForm(AuthenticationForm):
 class HouseholdForm(forms.ModelForm):
     class Meta:
         model = Household
-        fields = ['panchayath', 'ward', 'house_number', 'mahallu_number', 'mahallu_area', 'standard_of_living', 'head_of_household']
+        fields = ['panchayath', 'ward','house_name', 'house_number', 'mahallu_number', 'mahallu_area', 'standard_of_living', 'head_of_household']
 
 class HouseholdMemberForm(forms.ModelForm):
     class Meta:

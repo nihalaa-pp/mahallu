@@ -16,6 +16,23 @@
             text-align: center;
             font-size: 24px;
         }
+        /* Search and filter form styling */
+        .filter-form {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .filter-form input, .filter-form select {
+            padding: 8px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        /* Multi-select field styling */
+        .filter-form select[multiple] {
+            height: 100px;
+        }
+
 
         /* Table styling */
         table {
@@ -127,12 +144,36 @@
 </head>
 <body>
     <h2>HOUSEHOLD LIST</h2>
-    
+    <div class="filter-form">
+        <form method="get" action="">
+            <!-- Search field for House Name -->
+            <input type="text" name="query" placeholder="Search by House Name" value="{{ query }}">
+            
+            <!-- Dropdown filter for Mahallu Area -->
+            <select name="mahallu_area">
+                <option value="">Filter by Mahallu Area</option>
+                {% for area in mahallu_areas %}
+                    <option value="{{ area }}" {% if area == selected_mahallu_area %}selected{% endif %}>{{ area }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Dropdown filter for Head of Household -->
+            <select name="head_of_household">
+                <option value="">Filter by Head of Household</option>
+                {% for head in household_heads %}
+                    <option value="{{ head }}" {% if head == selected_head_of_household %}selected{% endif %}>{{ head }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="button">Apply</button>
+        </form>
+    </div>
     <table>
         <thead>
             <tr>
                 <th>Panchayath</th>
                 <th>Ward</th>
+                <th>House Name</th>
                 <th>House Number</th>
                 <th>Mahallu Number</th>
                 <th>Mahallu Area</th>
@@ -146,6 +187,7 @@
             <tr>
                 <td>{{ household.panchayath }}</td>
                 <td>{{ household.ward }}</td>
+                <td>{{ household.house_name }}</td>
                 <td>{{ household.house_number }}</td>
                 <td>{{ household.mahallu_number }}</td>
                 <td>{{ household.mahallu_area }}</td>

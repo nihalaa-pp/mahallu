@@ -16,6 +16,20 @@
             font-size: 24px;
         }
 
+        /* Filter form styling */
+        .filter-form {
+            margin-bottom: 20px;
+            color: white;
+            text-align: center; /* Center the form elements */
+        }
+
+        .filter-form input, .filter-form select {
+            padding: 8px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
         /* Table styling */
         table {
             width: 100%;
@@ -138,11 +152,36 @@
     
     <h2>Household Members</h2>
     
+    <!-- Search and filter form -->
+    <div class="filter-form">
+        <form method="get" action="">
+            <!-- Search field for Member Name -->
+            <input type="text" name="search_name" placeholder="Search by Name" value="{{ request.GET.search_name }}">
+            
+            <!-- Filter for Relationship to Head -->
+            <select name="relationship_to_head">
+                <option value="">Filter by Relationship</option>
+                {% for relationship in relationships %}
+                    <option value="{{ relationship }}" {% if relationship == request.GET.relationship_to_head %}selected{% endif %}>{{ relationship }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Filter for Job -->
+            <select name="job">
+                <option value="">Filter by Job</option>
+                {% for job in jobs %}
+                    <option value="{{ job }}" {% if job == request.GET.job %}selected{% endif %}>{{ job }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="button">Apply</button>
+        </form>
+    </div>
+
     <table>
         <thead>
             <tr>
                 <th>Name</th>
-                
                 <th>Relationship to Head</th>
                 <th>Phone Number</th>
                 <th>WhatsApp Number</th>
